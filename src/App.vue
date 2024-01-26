@@ -41,6 +41,10 @@ const ocultarModal = () => {
 
 }
 
+const guardarGasto = () => {
+
+} 
+
 </script>
 
 <template>
@@ -77,6 +81,7 @@ const ocultarModal = () => {
         <Modal
         v-if="modal.mostrar"
         @ocultar-modal="ocultarModal"
+        @guardar-gasto="guardarGasto"
         :modal="modal"
         v-model:nombre="gasto.nombre"
         v-model:cantidad="gasto.cantidad"
