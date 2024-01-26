@@ -1,5 +1,9 @@
 <script setup>
+import { ref } from 'vue'
 import cerrarModal from '../assets/img/cerrar.svg'
+import Alerta from './Alerta.vue';
+
+const error = ref('')
 
 const emit = defineEmits(['ocultar-modal', 'update:nombre', 'update:cantidad', 'update:categoria'])
 const props = defineProps({
@@ -20,6 +24,26 @@ const props = defineProps({
         required: true
     }
 })
+
+    const agregarGasto = () => {
+        // Validar que todos los campos tengan algo
+        const { cantidad, categoria, nombre} = props
+        if([nombre, cantidad, categoria].includes('')){
+            error.value = 'Todos los campos son obligatorios'
+            setTimeout(() => {
+                error.value = ''
+            }, 3000);
+            return
+        }
+        //Validar la cantidad
+        if(cantidad <= 0) {
+            error.value = 'La cantidad debe ser mayor a cero'
+            setTimeout(() => {
+                error.value = ''
+            }, 3000);
+            return
+        }
+    }
 </script>
 
 <template>
@@ -34,8 +58,11 @@ const props = defineProps({
         <div class="contenedor contenedor-formulario"
         :class="[modal.animar ? 'animar' : 'cerrar']">
             <form
-            class="nuevo-gasto">
+            class="nuevo-gasto"
+            @submit.prevent="agregarGasto">
+
                 <legend>Añadir Gasto</legend>
+                <Alerta v-if="error"> {{error}}</Alerta>
 
                 <div class="campo">
                     <label for="nombre">Nombre gasto:</label>
