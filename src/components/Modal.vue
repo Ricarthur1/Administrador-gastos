@@ -39,7 +39,6 @@ const props = defineProps({
             }, 3000);
             return
         }
-
         //Validar la cantidad
         if(cantidad <= 0) {
             error.value = 'La cantidad debe ser mayor a cero'
@@ -48,6 +47,15 @@ const props = defineProps({
             }, 3000);
             return
         }
+
+         //Validar que el usuario no gaste mas de lo disponible
+        //  if(cantidad > disponible) {
+        //     error.value = 'Has excedido el presupuesto'
+        //     setTimeout(() => {
+        //         error.value = ''
+        //     }, 3000);
+        //     return
+        // }
 
         emit('guardar-gasto')
     }
