@@ -22,12 +22,16 @@ const props = defineProps({
     categoria: {
         type: String,
         required: true
-    }
+    },
+    disponible: {
+            type: Number,
+            required: true
+        }
 })
 
     const agregarGasto = () => {
         // Validar que todos los campos tengan algo
-        const { cantidad, categoria, nombre} = props
+        const { cantidad, categoria, nombre, disponible} = props
         if([nombre, cantidad, categoria].includes('')){
             error.value = 'Todos los campos son obligatorios'
             setTimeout(() => {
@@ -35,6 +39,7 @@ const props = defineProps({
             }, 3000);
             return
         }
+
         //Validar la cantidad
         if(cantidad <= 0) {
             error.value = 'La cantidad debe ser mayor a cero'
