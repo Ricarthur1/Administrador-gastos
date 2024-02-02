@@ -92,7 +92,7 @@ const props = defineProps({
             class="nuevo-gasto"
             @submit.prevent="agregarGasto">
 
-                <legend>Añadir Gasto</legend>
+                <legend>{{id ? 'Editar Gasto' : 'Añadir Gasto'}}</legend>
                 <Alerta v-if="error"> {{error}}</Alerta>
 
                 <div class="campo">
@@ -136,7 +136,7 @@ const props = defineProps({
                 </div>
 
                 <input type="submit"
-                value="Añadir gasto"
+                :value="[id ? 'Guardar Cambios' : 'Añadir Gasto']"
                 >
 
 
