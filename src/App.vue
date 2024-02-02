@@ -33,6 +33,15 @@ watch(gastos, () => {
   deep: true
 })
 
+// Watch para reiniciar el modal cada que se cierre
+watch(modal, () => {
+  if(!modal.mostrar) {
+    reiniciarStateGasto()
+  }
+}, {
+  deep:true
+})
+
 const definirPresupuesto = (cantidad ) => {
     presupuesto.value = cantidad
     disponible.value = cantidad
@@ -61,16 +70,18 @@ const guardarGasto = () => {
   })
 
   ocultarModal()
+  reiniciarStateGasto()
+}
 
-  //Reiniciar el objeto
-  Object.assign(gasto, {
+const reiniciarStateGasto = () => {
+    //Reiniciar el objeto
+    Object.assign(gasto, {
     nombre: '',
     cantidad: '',
     categoria: '',
     id: null,
     fecha: Date.now()
     })
-
 }
 
 const seleccionarGasto = id => {
