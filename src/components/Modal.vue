@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import cerrarModal from '../assets/img/cerrar.svg'
 import Alerta from './Alerta.vue';
 
@@ -75,6 +75,11 @@ const props = defineProps({
         }
         emit('guardar-gasto')
     }
+
+    const isEditing = computed(() => {
+        return props.id
+    })
+
 </script>
 
 <template>
@@ -92,7 +97,7 @@ const props = defineProps({
             class="nuevo-gasto"
             @submit.prevent="agregarGasto">
 
-                <legend>{{id ? 'Editar Gasto' : 'Añadir Gasto'}}</legend>
+                <legend>{{isEditing ? 'Editar Gasto' : 'Añadir Gasto'}}</legend>
                 <Alerta v-if="error"> {{error}}</Alerta>
 
                 <div class="campo">
@@ -136,12 +141,20 @@ const props = defineProps({
                 </div>
 
                 <input type="submit"
-                :value="[id ? 'Guardar Cambios' : 'Añadir Gasto']"
+                :value="[isEditing ? 'Guardar Cambios' : 'Añadir Gasto']"
                 >
 
 
 
             </form>
+
+            <button
+            type="button"
+            class="btn-eliminar"
+            v-if="isEditing"
+            >
+                Eliminar Gasto
+            </button>
         </div>
 
     </div>
@@ -223,6 +236,18 @@ const props = defineProps({
         color: var(--blanco);
         font-weight: 700;
         cursor: pointer;
+    }
+
+    .btn-eliminar {
+        padding: 1rem;
+        width: 100%;
+        background-color: #ef4444;
+        font-weight: 700;
+        font-size: 2rem;
+        color: var(--blanco);
+        margin-top: 10rem;
+        cursor: pointer;
+        border: none;
     }
 
 </style>
