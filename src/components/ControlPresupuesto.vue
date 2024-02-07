@@ -1,5 +1,6 @@
 <script setup>
-    import imagen from '../assets/img/grafico.jpg'
+    import { computed } from 'vue'
+    import { CircleProgressBar } from 'circle-progress.vue';
     import { formatearCantidad } from '../helpers'
 
     defineEmits(['reset-app'])
@@ -18,15 +19,26 @@
             required: true
         }
     })
+
+    const porcentaje = computed(() => {
+        return parseInt(((props.presupuesto - props.disponible) / props.presupuesto) * 100)
+    })
 </script>
 
 <template>
     <div class="dos-columnas">
         <div class="contenedor-grafico">
-            <img 
-            :src="imagen"
-            >
-
+            <CircleProgressBar 
+            :value="porcentaje"  
+            :max="100" 
+            :size="250"
+            :strokeWidth="10"
+            colorUnfilled="#3b82f6"
+            colorBack="#e1e1e1"
+            percentage  
+           rounded>
+          {{ gastado }} / {{ presupuesto }}
+          </CircleProgressBar>   
         </div>
 
         <div class="contenedor-presupuesto">
